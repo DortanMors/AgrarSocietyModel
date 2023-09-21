@@ -38,7 +38,11 @@ def model(y, t):
     dXdt = a * X * Y * N - Ax * X - (C1 / Y + C2 * Y) * N
     dYdt = f(X) * R(N) * N - Ay * Y - a * X * Y * N
     dNdt = N * D(Y)
-    return [dXdt, dYdt, dNdt]
+    equations = np.zeros(3)
+    equations[0] = dXdt
+    equations[1] = dYdt
+    equations[2] = dNdt
+    return equations
 
 
 if __name__ == '__main__':
@@ -49,10 +53,10 @@ if __name__ == '__main__':
     y0 = [X0, Y0, N0]
 
     # Время
-    t = np.linspace(0, 100, 1000)
+    t = np.linspace(0, 10, 100)
 
     # Решение системы уравнений
-    solution = odeint(model, y0, t, full_output=True)
+    solution = odeint(model, y0, t, full_output=True)[0]
 
     # Извлечение результатов
     X, Y, N = solution[:, 0], solution[:, 1], solution[:, 2]
