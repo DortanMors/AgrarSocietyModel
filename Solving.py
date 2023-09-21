@@ -8,15 +8,18 @@ Ax = 0.2
 Ay = 0.3
 C1 = 2.5
 C2 = C1
-b = 0.01
+b = 101
+r = 1
 X0 = 100
+Y0 = 500
+N0 = 500
 R0 = 10
 N_optimal = 1000
 
 
 # Функция f(X)
 def f(X):
-    return 1 + b * (X ** 2) / (X0 ** 2 + X ** 2)
+    return 1 + (b * (X ** 2) / (X0 ** 2 + X ** 2))
 
 
 # Функция R(N)
@@ -29,14 +32,38 @@ def R(N):
 
 # Функция D(Y)
 def D(Y):
-    return 0.01 * Y
+    return r * (1 - Y0 / Y)
+
+
+def G(X, Y, N):
+    return a * X * Y * N
+
+
+# Ф-ция потребления государства
+def Q_x(X):
+    return Ax * X
+
+
+# Ф-ция потребления крестьян
+def Q_y(Y):
+    return Ay * Y
+
+
+# Ф-ция затрат на управление
+def C(X, Y, N):
+    return (C1 / Y + C2 * Y) * N
+
+
+# производственная функция, характеризующая совокупное сельскохозяйственное производство в государстве
+def F(X, Y, N):
+    return f(X) * R(N) * N
 
 
 # Система дифференциальных уравнений
 def model(y, t):
     X, Y, N = y
-    dXdt = a * X * Y * N - Ax * X - (C1 / Y + C2 * Y) * N
-    dYdt = f(X) * R(N) * N - Ay * Y - a * X * Y * N
+    dXdt = G(X, Y, N) - Q_x(X) - C(X, Y, N)
+    dYdt = F(X, Y, N) - N * Q_y(Y) - G(X, Y, N)
     dNdt = N * D(Y)
     equations = np.zeros(3)
     equations[0] = dXdt
@@ -47,9 +74,6 @@ def model(y, t):
 
 if __name__ == '__main__':
     # Начальные условия
-    X0 = 50
-    Y0 = 20
-    N0 = 500
     y0 = [X0, Y0, N0]
 
     # Время
