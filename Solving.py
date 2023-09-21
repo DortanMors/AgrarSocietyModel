@@ -3,11 +3,11 @@ from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
 # Определение параметров и функций
-a = 0.1
+a = 2.25
 Ax = 0.2
 Ay = 0.3
-C1 = 0.1
-C2 = 0.2
+C1 = 2.5
+C2 = C1
 b = 0.01
 X0 = 100
 R0 = 10
@@ -59,6 +59,7 @@ if __name__ == '__main__':
     solution = odeint(model, y0, t, full_output=True)[0]
 
     # Извлечение результатов
+    print(solution)
     X, Y, N = solution[:, 0], solution[:, 1], solution[:, 2]
 
     # Визуализация результатов
