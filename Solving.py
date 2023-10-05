@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 #  Определение параметров и функций
 # Доля изымаемого у крестьян продукта
 a = 0.04
-# Коэффициент потребления для государства
+# Коэффициент расходов для государства
 Ax = 0.2
 # Rоэффициент потребления для крестьян
 Ay = 0.1
@@ -80,8 +80,9 @@ def F(X, Y, N):
 
 
 # Система дифференциальных уравнений
-def model(y, t):
-    X, Y, N = y
+def model(parameters, t):
+    X, YN, N = parameters
+    Y = YN / N
     dXdt = G(X, Y, N) - Q_x(X) - C(X, Y, N)
     dYNdt = F(X, Y, N) - N * Q_y(Y) - G(X, Y, N)
     dNdt = N * D(Y)
@@ -94,19 +95,16 @@ def model(y, t):
 
 if __name__ == '__main__':
     # Начальные условия
-    y0 = [X0, Y0, N0]
+    parameters0 = [X0, Y0 * N0, N0]
 
     # Время
     t = np.linspace(0, 10, 100)
 
     # Решение системы уравнений
-    solution = odeint(model, y0, t, full_output=True)[0]
+    solution = odeint(model, parameters0, t, full_output=True)[0]
 
     # Извлечение результатов
-    print(solution)
-    X, Y, N = solution[:, 0], solution[:, 1], solution[:, 2]
-
-    YN = Y * N
+    X, YN, N = solution[:, 0], solution[:, 1], solution[:, 2]
 
     # Визуализация результатов
     plt.figure(figsize=(10, 6))
