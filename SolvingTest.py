@@ -21,7 +21,7 @@ if __name__ == '__main__':
     t = np.linspace(0, 10, 100)  # массив времени от 0 до 10 с шагом 0.1
 
     solution = odeint(system_of_equations, y0, t)
-
+    print(solution)
     y1 = solution[:, 0]
     y2 = solution[:, 1]
     y3 = solution[:, 2]
