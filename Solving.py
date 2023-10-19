@@ -26,6 +26,8 @@ N0 = 1000
 R0 = 1
 # Количество крестьян, соответствующее ситуации полного сельскохозяйственного освоения пригодных для обработки земель
 N_optimal = 1000
+T = 100
+T_split = 1000
 
 
 N_minimal = 1000
@@ -102,7 +104,7 @@ if __name__ == '__main__':
     parameters0 = [X0, Y0 * N0, N0]
 
     # Время
-    t = np.linspace(0, 10, 100)
+    t = np.linspace(0, T, T_split)
 
     # Решение системы уравнений
     solution = odeint(model, parameters0, t, full_output=True)[0]
