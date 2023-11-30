@@ -117,6 +117,8 @@ def solve_and_show(X0, Y0, N0, num):
     fig, axs = plt.subplots(nrows=2, ncols=1)
     fig.suptitle(f'$X_0$={X0}, $Y_0$={Y0}, $N_0$={N0}')
 
+    fig.set_figwidth(2)
+    fig.set_figwidth(10)
     axs[0].plot(t, X, label='X (государство)')
     axs[0].plot(t, YN, label='YN (крестьяне)')
     axs[1].plot(t, N, label='N (численность крестьян)', color='green')
