@@ -100,7 +100,7 @@ def model(parameters, t, Y0, X0):
     return equations
 
 
-def solve_and_show(X0, Y0, N0):
+def solve_and_show(X0, Y0, N0, num):
     # Начальные условия
     parameters0 = [X0, Y0 * N0, N0]
 
@@ -126,8 +126,28 @@ def solve_and_show(X0, Y0, N0):
     axs[0].grid()
     axs[1].grid()
     # plt.show()
-    plt.savefig(f'X0={X0}, Y0={Y0}, N0={N0}.jpg')
+    plt.savefig(f'{num}. X0={X0}, Y0={Y0}, N0={N0}.jpg')
+    plt.close(fig)
 
 
 if __name__ == '__main__':
-    solve_and_show(X0_BASE, Y0_BASE, N0_BASE)
+    combines = [
+        [X0_BASE, Y0_BASE, N0_BASE],
+        [X0_BASE * 2, Y0_BASE, N0_BASE],
+        [X0_BASE / 2, Y0_BASE, N0_BASE],
+        [X0_BASE, Y0_BASE * 2, N0_BASE],
+        [X0_BASE, Y0_BASE / 2, N0_BASE],
+        [X0_BASE, Y0_BASE, N0_BASE * 2],
+        [X0_BASE, Y0_BASE, N0_BASE / 2],
+        [X0_BASE * 2, Y0_BASE * 2, N0_BASE],
+        [X0_BASE / 2, Y0_BASE / 2, N0_BASE],
+        [X0_BASE, Y0_BASE * 2, N0_BASE * 2],
+        [X0_BASE, Y0_BASE / 2, N0_BASE / 2],
+        [X0_BASE * 2, Y0_BASE, N0_BASE * 2],
+        [X0_BASE / 2, Y0_BASE, N0_BASE / 2],
+        [X0_BASE * 2, Y0_BASE * 2, N0_BASE * 2],
+        [X0_BASE / 2, Y0_BASE / 2, N0_BASE / 2],
+    ]
+
+    for index, parameters in enumerate(combines):
+        solve_and_show(parameters[0], parameters[1], parameters[2], index)
